@@ -34,6 +34,10 @@ public class ParkingLot
        }
      }
    }
+   public Car[][][] getReplay(){
+	   return replay;
+   }
+   
    //adds a snapshot of the car array to the replay
    public void addToReplay(int turn){
 	replay[turn] = myLotArray;

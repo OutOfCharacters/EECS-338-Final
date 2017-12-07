@@ -81,6 +81,9 @@ public class Car extends Thread {
       }
     }
     
+	public Color getColor(){
+		return carColor;
+	}
     public void triggerStartFlag()
     {
       startFlag = true;
