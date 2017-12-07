@@ -47,6 +47,7 @@ public class Car extends Thread {
         {
         }
         startFlag = false;
+        stepFlag = false;
 
         //car moves as many steps as it is allocated
         for(int n = 0; n < numberOfSteps; n++)
@@ -79,6 +80,7 @@ public class Car extends Thread {
           }
         }
       }
+      myLot.increment();
     }
     
  public Color getColor(){

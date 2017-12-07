@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,17 +41,17 @@ class Controller
   }
   //Animates the replay
   public void getReplay(ParkingLot parkingLot, JLabel grid){
-	Car[][][] replay = parkingLot.getReplay();
-	 //puts current snapshot into the JFrame
-	for(int i = 0; i<replay.length; i++){
-		for(int j=0; j<replay[].length; j++){
-			for(int k=0; k<replay[][].length; k++){
-				grid[j][k] = replay[i][j][k].getColor();
-				
-			}
-		}
-		wait(500000);
-	}
+ Car[][][] replay = parkingLot.getReplay();
+  //puts current snapshot into the JFrame
+ for(int i = 0; i<replay.length; i++){
+  for(int j=0; j<replay[].length; j++){
+   for(int k=0; k<replay[][].length; k++){
+    grid[j][k] = replay[i][j][k].getColor();
+    
+   }
+  }
+  wait(500000);
+ }
   }
   
   

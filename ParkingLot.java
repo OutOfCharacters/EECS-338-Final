@@ -5,13 +5,19 @@ public class ParkingLot
    //sets a defualt value for x and y dimensions, which can be changed later
    private final int xLength = 20;
    private final int yLength = 20;
+   private final int MAX_STEPS = 5;
+   
+   private int countDone;
    
    private Car[][] myLotArray;
    private boolean[][] isLocked;
    private Car[][][] replay;
+   private Car[] myCars;
+   
    public void ParkingLot(int turns)
    {
-	 replay = new Car[turns][xLength][yLength];
+     countDone = 0;
+     replay = new Car[turns][xLength][yLength];
      myLotArray = new Car[xLength][yLength];
      isLocked = new boolean[xLength][yLength];
      for(int i = 0; i < xLength; i++)
@@ -26,6 +32,7 @@ public class ParkingLot
        myLotArray[0][i] = new Car(Color.GRAY);
        myLotArray[xLength - 1][i] = new Car(Color.GRAY);
      }
+     
      for(int x = 0; x < xLength; x++)
      {
        for(int y = 0; y < yLength; y++)
@@ -34,14 +41,39 @@ public class ParkingLot
        }
      }
    }
+   
+   //starts to run the simulation
+   public void RunTurns()
+   {
+     //iterates until every car has reached its destination
+     while(countDone < myCars.length)
+     {
+      //iterates for all cars to trigger turn 
+      for(int x = 0; x < myCars.length; x++)
+      {
+        myCars[x].triggerStartFlag();
+      }
+      
+      //iterates for all cars to trigger step flag, as many times as the max number of steps possible
+      for(int x = 0; x < MAX_MOVES; x++)
+      {
+       for(int y = 0; y < myCars.length; x++)
+       {
+        myCars[x].triggerStepFlag();
+       }
+      }
+     }    
+   }
+   
    public Car[][][] getReplay(){
-	   return replay;
+    return replay;
    }
    
    //adds a snapshot of the car array to the replay
    public void addToReplay(int turn){
-	replay[turn] = myLotArray;
+     replay[turn] = myLotArray;
    }
+   
    public boolean isOccupied(int x, int y)
    {
     if (myLotArray[x][y] == null)
@@ -63,5 +95,10 @@ public class ParkingLot
    public void setLock(int x, int y, boolean bool)
    {
     isLocked[x][y] = bool; 
+   }
+   
+   public void increment()
+   {
+    countDone++; 
    }
 }
