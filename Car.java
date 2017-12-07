@@ -15,6 +15,7 @@ public class Car extends Thread {
     private boolean moveDiag;
     
     private boolean startFlag = false;
+    private boolean stepFlag = false;
    
     
     public Car(int x, int y, int speed, Color colour, ParkingLot newLot)
@@ -45,23 +46,49 @@ public class Car extends Thread {
         while(!startFlag)
         {
         }
+        startFlag = false;
 
         //car moves as many steps as it is allocated
         for(int n = 0; n < numberOfSteps; n++)
         {
+          
           //checks each space in the loop
           int[][] spacesToCheck = nextDestination();
           for(int i = 0; i < 3; i++)
           {
+            //waits for signal from ParkingLot for a new step
+            while(!stepFlag)
+            {
+            }
+            stepFlag = false;
             
+            //checks if space is currently locked
+            if(!myLot.isLocked(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1)))
+            {
+              //locks current space being looked at, checks if it's occupied.  If yes, put car in space and delete old car reference.
+              myLot.setLocked(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1), true);
+              if(!myLot.isOccupied(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1)))
+              {
+                myLot.setPosition(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1), this);
+                myLot.setPosition(currentX, currentY, null);
+                currentX = myLot.spacesToCheck(i,0);
+                currentY = myLot.spacesToCheck(i,1);
+              }
+              myLot.setLocked(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1), false);
+            }
           }
         }
       }
     }
     
-    public void triggerFlag()
+    public void triggerStartFlag()
     {
       startFlag = true;
+    }
+    
+    public void triggerStepFlag()
+    {
+      stepFlag = true;
     }
     
     public int getX(){
