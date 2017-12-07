@@ -1,47 +1,90 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package car;
+import java.awt.Color;
 
-/**
- *
- * @author super
- */
-public class Car {
+public class Car extends Thread {
 
     private final int xDestination;
     private final int yDestination;
     private final int numberOfSteps;
-    private final String carColor;
+    private final Color carColor;
+    
+    private ParkingLot myLot;
     private int currentX;
     private int currentY;
     private boolean moveX;
     private boolean moveY;
     private boolean moveDiag;
-    public Car(int x, int y, int speed, String colour){
+    
+    private boolean startFlag = false;
+   
+    
+    public Car(int x, int y, int speed, Color colour, ParkingLot newLot)
+    {
         xDestination = x;
         yDestination = y;
         numberOfSteps = speed;
         carColor = colour;
+        myLot = newLot;
     }
+    
+    public Car(Color colour, ParkingLot newLot)
+    {
+      xDestination = 0;
+      yDestination = 0;
+      numberOfSteps = 0;
+      carColor = colour;
+      myLot = newLot;
+    }
+    
+    //this method is called when the thread is ran, overides the thread class
+    public void run()
+    {
+      //stops when car has reached it's destination, car will then be deleted when it's reference is deleted by parkingLot
+      while(currentX != xDestination || currentY != yDestination)
+      {
+        //waits for input from parkingLot signaling a new turn
+        while(!startFlag)
+        {
+        }
+
+        //car moves as many steps as it is allocated
+        for(int n = 0; n < numberOfSteps; n++)
+        {
+          //checks each space in the loop
+          int[][] spacesToCheck = nextDestination();
+          for(int i = 0; i < 3; i++)
+          {
+            
+          }
+        }
+      }
+    }
+    
+    public void triggerFlag()
+    {
+      startFlag = true;
+    }
+    
     public int getX(){
         return this.xDestination;
     }
+    
     public int getY(){
         return this.yDestination;
     }
+    
     public int getSteps(){
         return this.numberOfSteps;
     }
+    
     public void setCurrentSpace(int x, int y){
         currentX = x;
         currentY = y;
     }
+    
     private int xPathLength(){
         return currentX - xDestination;
     }
+    
     private int yPathLength(){
         return currentY - yDestination;
     }
@@ -65,157 +108,55 @@ public class Car {
     }
     
     //check where to go
-    private int[] nextDestination(Boolean[][] parkingLot){
+    private int[][] nextDestination(){
         //current location check 3 directions 
         int directionType = decideShortestPath();
         int north = getY()-1;
         int south = getY()+1;
         int east = getX()+1;
         int west = getX()-1;
+        
         //north
         if(yPathLength()>0 && directionType == -1){
             //within the bounds + available space
             //default case: Go straight up
-            if(north>0 && !parkingLot[getX()][north]){
-                return new int[] {getX(), north};
-            }
-            
-            //check northeast
-            else if(north>0 && east <parkingLot.length && !parkingLot[east][north]){
-                return new int[] {east, north};
-            }
-            
-            //check northwest
-            else if(north>0 && west >= 0 && !parkingLot[west][north]){
-                return new int[] {west, north};
-            }
-            
-            
+            return new int[][] {{getX(), north}, {east, north}, {west, north}};
         }
         //south
         else if(yPathLength()<0 && directionType == -1){
-
-            //within the bounds + available space
-            //default case: Go straight down
-            if(south<parkingLot[0].length && !parkingLot[getX()][south]){
-                return new int[] {getX(), south};
-            }
-            
-            //check southeast
-            else if(south<parkingLot[0].length && east <parkingLot.length && !parkingLot[east][south]){
-                return new int[] {east, south};
-            }
-            
-            //check southwest
-            else if(south<parkingLot[0].length && west >= 0 && !parkingLot[west][south]){
-                return new int[] {west, south};
-            }
+            return new int[][] {{getX(), south},{east, south}, {west, south}};           
         }
         //east
         else if(xPathLength()>0 && directionType == 1){
             //default case go east
-            if(east<parkingLot.length && !parkingLot[east][getY()]){
-                return new int[] {east, getY()};
-            }
-            
-            //check southeast
-            else if(south<parkingLot[0].length && east <parkingLot.length && !parkingLot[east][south]){
-                return new int[] {east, south};
-            }
-            
-            //check northeast
-            else if(north>=0 && east <parkingLot.length && !parkingLot[east][north]){
-                return new int[] {east, north};
-            }
+            return new int[][]{{east,getY()},{east,south},{east,north}};
         }
         //west
         else if(xPathLength()<0 && directionType == 1){
-
             //default case go west
-            if(west>=0 && !parkingLot[west][getY()]){
-                return new int[] {west, getY()};
-            }
-            
-            //check southwest
-            else if(south<parkingLot[0].length && west>=0 && !parkingLot[west][south]){
-                return new int[] {west, south};
-            }
-            
-            //check northwest
-            else if(north>=0 && west>=0 && !parkingLot[west][north]){
-                return new int[] {west, north};
-            }
-        }
-        
+            return new int[][] {{west, getY()},{west, south}, {west, north}};
+        }      
          //northeast
         else if(yPathLength()>0 && xPathLength()>0 && directionType == 0){
             //default case: northeast
-            if(north>0 && east <parkingLot.length && !parkingLot[east][north]){
-                return new int[] {east, north};
-            }
-            //check north
-            else if(north>0 && !parkingLot[getX()][north]){
-                return new int[] {getX(), north};
-            }
-            
-            //check east
-            else if(east<parkingLot.length && !parkingLot[east][getY()]){
-                return new int[] {east, getY()};
-            }
-            
-            
+            return new int[][] {{east, north}, {getX(), north}, {east, getY()}};                     
         }
          //northwest
         else if(yPathLength()>0 && xPathLength()<0 && directionType == 0){
-
             //check northwest
-            if(north>0 && west >= 0 && !parkingLot[west][north]){
-                return new int[] {west, north};
-            }
-            //check north
-            else if(north>0 && !parkingLot[getX()][north]){
-                return new int[] {getX(), north};
-            }
-            //check west
-            else if(west>=0 && !parkingLot[west][getY()]){
-                return new int[] {west, getY()};
-            }
+            return new int[][]{{west, north},{getX(), north}, {west, getY()}};
         }
          //southeast
         else if(yPathLength()<0 && xPathLength()>0 && directionType == 0){
             //default check southeast
-            if(south<parkingLot[0].length && east <parkingLot.length && !parkingLot[east][south]){
-                return new int[] {east, south};
-            }
-            
-            //check south
-            else if(south<parkingLot[0].length && !parkingLot[getX()][south]){
-                return new int[] {getX(), south};
-            }
-            //check east
-            else if(east<parkingLot.length && !parkingLot[east][getY()]){
-                return new int[] {east, getY()};
-            }
+            return new int[][]{{east, south},{getX(), south}, {east, getY()}};
         }
          //southwest
-        else if(yPathLength()<0 && xPathLength()<0 && directionType == 0){
+         //else if(yPathLength()<0 && xPathLength()<0 && directionType == 0)
+        else{
             //check southwest
-            if(south<parkingLot[0].length && west >= 0 && !parkingLot[west][south]){
-                return new int[] {west, south};
-            }
-            //check south
-            else if(south<parkingLot[0].length && !parkingLot[getX()][south]){
-                return new int[] {getX(), south};
-            }
-            //check west
-            else if(west>=0 && !parkingLot[west][getY()]){
-                return new int[] {west, getY()};
-            }
-        }
-        
-        //if the case doesn't apply for the current direction return current location
-        return new int[] {getX(), getY()};
-        
+            return new int[][]{{west, south},{getX(), south},{west, getY()}};
+        }              
     }
     
 }

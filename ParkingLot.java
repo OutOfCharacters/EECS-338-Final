@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 public class ParkingLot
 {
    //sets a defualt value for x and y dimensions, which can be changed later
@@ -14,14 +16,14 @@ public class ParkingLot
      for(int i = 0; i < xLength; i++)
      {
        //fills lot with a border of empty cars
-       myLotArray[i][0] = new Car();
-       myLotArray[i][yLength - 1] = new Car();
+       myLotArray[i][0] = new Car(Color.GRAY);
+       myLotArray[i][yLength - 1] = new Car(Color.GRAY);
      }
      
      for(int i = 0; i < yLength; i++)
      {
-       myLotArray[0][i] = new Car();
-       myLotArray[xLength - 1][i] = new Car();
+       myLotArray[0][i] = new Car(Color.GRAY);
+       myLotArray[xLength - 1][i] = new Car(Color.GRAY);
      }
      for(int x = 0; x < xLength; x++)
      {
