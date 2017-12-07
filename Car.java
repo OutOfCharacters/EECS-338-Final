@@ -63,27 +63,27 @@ public class Car extends Thread {
             stepFlag = false;
             
             //checks if space is currently locked
-            if(!myLot.isLocked(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1)))
+            if(!myLot.isLocked(spacesToCheck[i][0], spacesToCheck[i][1]))
             {
               //locks current space being looked at, checks if it's occupied.  If yes, put car in space and delete old car reference.
-              myLot.setLocked(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1), true);
-              if(!myLot.isOccupied(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1)))
+              myLot.setLock(spacesToCheck[i][0], spacesToCheck[i][1], true);
+              if(!myLot.isOccupied(spacesToCheck[i][0], spacesToCheck[i][1]))
               {
-                myLot.setPosition(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1), this);
+                myLot.setPosition(spacesToCheck[i][0], spacesToCheck[i][1], this);
                 myLot.setPosition(currentX, currentY, null);
-                currentX = myLot.spacesToCheck(i,0);
-                currentY = myLot.spacesToCheck(i,1);
+                currentX = spacesToCheck[i][0];
+                currentY = spacesToCheck[i][1];
               }
-              myLot.setLocked(myLot.spacesToCheck(i,0), myLot.spacesToCheck(i,1), false);
+              myLot.setLock(spacesToCheck[i][0], spacesToCheck[i][1], false);
             }
           }
         }
       }
     }
     
-	public Color getColor(){
-		return carColor;
-	}
+ public Color getColor(){
+  return carColor;
+ }
     public void triggerStartFlag()
     {
       startFlag = true;
