@@ -8,9 +8,10 @@ public class ParkingLot
    
    private Car[][] myLotArray;
    private boolean[][] isLocked;
-   
-   public void setup()
+   private Car[][][] replay;
+   public void ParkingLot(int turns)
    {
+	 replay = new Car[turns][xLength][yLength];
      myLotArray = new Car[xLength][yLength];
      isLocked = new boolean[xLength][yLength];
      for(int i = 0; i < xLength; i++)
@@ -33,7 +34,10 @@ public class ParkingLot
        }
      }
    }
-   
+   //adds a snapshot of the car array to the replay
+   public void addToReplay(int turn){
+	replay[turn] = myLotArray;
+   }
    public boolean isOccupied(int x, int y)
    {
     if (myLotArray[x][y] == null)
