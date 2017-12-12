@@ -7,6 +7,7 @@ class Controller
   public static void main(String[] args)
   {
     ParkingLot parkingLot = new ParkingLot();
+    parkingLot.RunTurns();
     
     JFrame frame = new JFrame();   
     JPanel panel = new JPanel();
@@ -39,7 +40,7 @@ class Controller
     //grid[0][0].setBackground(Color.red);
     frame.setVisible(true);
     
-    getReplay(parkingLot, grid);
+    //getReplay(parkingLot, grid);
   }
   //Animates the replay
   public static void getReplay(ParkingLot parkingLot, JLabel[][] grid){
