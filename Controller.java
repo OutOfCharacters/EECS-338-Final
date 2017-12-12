@@ -7,7 +7,7 @@ class Controller
   public static void main(String[] args)
   {
     ParkingLot parkingLot = new ParkingLot();
-    parkingLot.setup();
+
     JFrame frame = new JFrame();   
     JPanel panel = new JPanel();
     frame.add(panel);
@@ -38,21 +38,25 @@ class Controller
     }
     //grid[0][0].setBackground(Color.red);
     frame.setVisible(true);
+    
+    getReplay(parkingLot, grid);
   }
   //Animates the replay
-  public void getReplay(ParkingLot parkingLot, JLabel grid){
+  public static void getReplay(ParkingLot parkingLot, JLabel[][] grid){
  Car[][][] replay = parkingLot.getReplay();
   //puts current snapshot into the JFrame
- for(int i = 0; i<replay.length; i++){
-  for(int j=0; j<replay[].length; j++){
-   for(int k=0; k<replay[][].length; k++){
-    grid[j][k] = replay[i][j][k].getColor();
-    
+ for(int i = 0; i<replay.length; i++)
+ {
+  for(int j=0; j<replay[0].length; j++)
+  {
+   for(int k=0; k<replay[0][0].length; k++)
+   {
+    grid[j][k].setBackground(replay[i][j][k].getColor());    
+    }
    }
+   //(500);
   }
-  wait(500000);
  }
-  }
   
   
 }

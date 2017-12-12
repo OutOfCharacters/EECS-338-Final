@@ -23,15 +23,17 @@ public class ParkingLot
      for(int i = 0; i < xLength; i++)
      {
        //fills lot with a border of empty cars
-       myLotArray[i][0] = new Car(Color.GRAY);
-       myLotArray[i][yLength - 1] = new Car(Color.GRAY);
+       myLotArray[i][0] = new Car(Color.GRAY, this);
+       myLotArray[i][yLength - 1] = new Car(Color.GRAY, this);
      }
      
      for(int i = 0; i < yLength; i++)
      {
-       myLotArray[0][i] = new Car(Color.GRAY);
-       myLotArray[xLength - 1][i] = new Car(Color.GRAY);
+       myLotArray[0][i] = new Car(Color.GRAY, this);
+       myLotArray[xLength - 1][i] = new Car(Color.GRAY, this);
      }
+     
+     myLotArray[10][10] = new Car(10, 10, 1, Color.BLUE, this);
      
      for(int x = 0; x < xLength; x++)
      {
@@ -45,6 +47,7 @@ public class ParkingLot
    //starts to run the simulation
    public void RunTurns()
    {
+     int runCounter = 0;
      //iterates until every car has reached its destination
      while(countDone < myCars.length)
      {
@@ -55,13 +58,14 @@ public class ParkingLot
       }
       
       //iterates for all cars to trigger step flag, as many times as the max number of steps possible
-      for(int x = 0; x < MAX_MOVES; x++)
+      for(int x = 0; x < MAX_STEPS; x++)
       {
        for(int y = 0; y < myCars.length; x++)
        {
         myCars[x].triggerStepFlag();
        }
       }
+      replay[runCounter] = myLotArray;
      }    
    }
    
