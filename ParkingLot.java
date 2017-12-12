@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class ParkingLot
 {
@@ -14,13 +16,12 @@ public class ParkingLot
   //keeps track of if the space is being looked at
   private boolean[][] isLocked;
   //keeps track of the replays
-  private Car[][][] replay;
+  private ArrayList<Car[][]> replay = new ArrayList<>();
   private Car[] myCars;
   
-  public void ParkingLot(int turns)
+  public ParkingLot()
   {
     countDone = 0;
-    replay = new Car[turns][xLength][yLength];
     myLotArray = new Car[xLength][yLength];
     isLocked = new boolean[xLength][yLength];
     for(int i = 0; i < xLength; i++)
@@ -36,15 +37,6 @@ public class ParkingLot
       myLotArray[xLength - 1][i] = new Car(Color.GRAY, this);
     }
     
-    
-    myLotArray[10][10] = new Car(10, 10, 1, Color.BLUE, this);
-    
-    myCars = new Car[1];
-    
-    //adds in cars into the array
-    myCars[0] = myLotArray[10][10];
-    
-    
     for(int x = 0; x < xLength; x++)
     {
       for(int y = 0; y < yLength; y++)
@@ -52,14 +44,28 @@ public class ParkingLot
         isLocked[x][y] = false;
       }
     }
+    
+    myLotArray[10][10] = new Car(10, 10, 1, 1, 1, Color.BLUE, this);
+    
+    myCars = new Car[1];
+    
+    //adds in cars into the array
+    myCars[0] = myLotArray[10][10];
+    
+    for(Car car : myCars)
+    {
+        car.start();
+    }
   }
   
   //starts to run the simulation
-  public void RunTurns()
+  public void RunTurns() throws InterruptedException
   {
     int runCounter = 0;
+    
     //iterates until every car has reached its destination
-    while(countDone < myCars.length)
+    //while(countDone < myCars.length)
+    for(int poop = 0; poop<20; poop++)
     {
       //iterates for all cars to trigger turn 
       for(int x = 0; x < myCars.length; x++)
@@ -73,23 +79,24 @@ public class ParkingLot
 
        for(int y = 0; y < myCars.length; y++)
        {
-        myCars[x].triggerStepFlag();
+        myCars[y].triggerStepFlag();
        }
-
+       TimeUnit.MILLISECONDS.sleep(50);
       }
       //saves current snapshot into the array
-      replay[runCounter] = myLotArray;
+      replay.add(myLotArray);
     }    
+
   }
   
-  public Car[][][] getReplay(){
+  public ArrayList<Car[][]> getReplay(){
     return replay;
   }
   
   //adds a snapshot of the car array to the replay
-  public void addToReplay(int turn){
-    replay[turn] = myLotArray;
-  }
+  //public void addToReplay(int turn){
+    //replay[turn] = myLotArray;
+  //}
   
   public boolean isOccupied(int x, int y)
   {

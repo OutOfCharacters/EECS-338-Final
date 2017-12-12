@@ -6,7 +6,6 @@ public class Car extends Thread {
   private final int yDestination;
   private final int numberOfSteps;
   private final Color carColor;
-  
   private ParkingLot myLot;
   private int currentX;
   private int currentY;
@@ -18,10 +17,12 @@ public class Car extends Thread {
   private boolean stepFlag = false;
   
   
-  public Car(int x, int y, int speed, Color colour, ParkingLot newLot)
+  public Car(int x, int y, int xDest, int yDest, int speed, Color colour, ParkingLot newLot)
   {
-    xDestination = x;
-    yDestination = y;
+    currentY = y;
+    currentX = x;
+    xDestination = xDest;
+    yDestination = yDest;
     numberOfSteps = speed;
     carColor = colour;
     myLot = newLot;
@@ -39,9 +40,11 @@ public class Car extends Thread {
   //this method is called when the thread is ran, overides the thread class
   public void run()
   {
+    
     //stops when car has reached it's destination, car will then be deleted when it's reference is deleted by parkingLot
     while(currentX != xDestination || currentY != yDestination)
     {
+      
       //waits for input from parkingLot signaling a new turn
       while(!startFlag)
       {
@@ -52,20 +55,20 @@ public class Car extends Thread {
       //car moves as many steps as it is allocated
       for(int n = 0; n < numberOfSteps; n++)
       {
-        
+          //waits for signal from ParkingLot for a new step
+          while(!stepFlag)
+          {System.out.println("am I stalling?");
+          }
+          stepFlag = false;
         //checks each space in the loop
         int[][] spacesToCheck = nextDestination();
         for(int i = 0; i < 3; i++)
         {
-          //waits for signal from ParkingLot for a new step
-          while(!stepFlag)
-          {
-          }
-          stepFlag = false;
-          
+           System.out.println(myLot.isLocked(spacesToCheck[i][0], spacesToCheck[i][1]));
           //checks if space is currently locked
           if(!myLot.isLocked(spacesToCheck[i][0], spacesToCheck[i][1]))
           {
+              
             //locks current space being looked at, checks if it's occupied.  If yes, put car in space and delete old car reference.
             myLot.setLock(spacesToCheck[i][0], spacesToCheck[i][1], true);
             if(!myLot.isOccupied(spacesToCheck[i][0], spacesToCheck[i][1]))
@@ -78,6 +81,7 @@ public class Car extends Thread {
             myLot.setLock(spacesToCheck[i][0], spacesToCheck[i][1], false);
           }
         }
+        System.out.println(currentX +" "+ currentY);
       }
     }
     myLot.increment();
@@ -97,11 +101,11 @@ public class Car extends Thread {
   }
   
   public int getX(){
-    return this.xDestination;
+    return this.currentX;
   }
   
   public int getY(){
-    return this.yDestination;
+    return this.currentY;
   }
   
   public int getSteps(){

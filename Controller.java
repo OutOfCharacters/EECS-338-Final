@@ -1,10 +1,12 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 class Controller
 {
-  public static void main(String[] args)
+  public static void main(String[] args) throws InterruptedException
   {
     ParkingLot parkingLot = new ParkingLot();
     parkingLot.RunTurns();
@@ -25,12 +27,12 @@ class Controller
       for (int j = 0; j < col; j++){
         if((i + j) % 2 == 0)
         {
-          grid[i][j] = new JLabel("kevin", SwingConstants.CENTER);
+          grid[i][j] = new JLabel("", SwingConstants.CENTER);
           grid[i][j].setBackground(Color.red);
         }
         else
         {
-          grid[i][j] = new JLabel("chang", SwingConstants.CENTER);
+          grid[i][j] = new JLabel("", SwingConstants.CENTER);
           grid[i][j].setBackground(Color.orange);
         }
         grid[i][j].setOpaque(true);
@@ -40,22 +42,27 @@ class Controller
     //grid[0][0].setBackground(Color.red);
     frame.setVisible(true);
     
-    //getReplay(parkingLot, grid);
+    getReplay(parkingLot, grid);
   }
   //Animates the replay
-  public static void getReplay(ParkingLot parkingLot, JLabel[][] grid){
-    Car[][][] replay = parkingLot.getReplay();
+  public static void getReplay(ParkingLot parkingLot, JLabel[][] grid) throws InterruptedException{
+    ArrayList<Car[][]> replay = parkingLot.getReplay();
     //puts current snapshot into the JFrame
-    for(int i = 0; i<replay.length; i++)
+    for(Car[][] snapshot : replay)
     {
-      for(int j=0; j<replay[0].length; j++)
+      for(int j=0; j<snapshot.length; j++)
       {
-        for(int k=0; k<replay[0][0].length; k++)
+        for(int k=0; k<snapshot[0].length; k++)
         {
-          grid[j][k].setBackground(replay[i][j][k].getColor());    
+          if(snapshot[j][k] == null){
+              grid[j][k].setBackground(Color.BLACK);
+          }
+          else{
+              grid[j][k].setBackground(snapshot[j][k].getColor());    
+          }         
         }
       }
-      //(500);
+      TimeUnit.SECONDS.sleep(1);
     }
   }
   
