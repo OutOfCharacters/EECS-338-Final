@@ -60,7 +60,7 @@ public class ParkingLot
       //iterates for all cars to trigger step flag, as many times as the max number of steps possible
       for(int x = 0; x < MAX_STEPS; x++)
       {
-       for(int y = 0; y < myCars.length; x++)
+       for(int y = 0; y < myCars.length; y++)
        {
         myCars[x].triggerStepFlag();
        }
