@@ -55,6 +55,7 @@ class Controller
         for(int k=0; k<snapshot[0].length; k++)
         {
           if(snapshot[j][k] == null){
+              
               grid[j][k].setBackground(Color.BLACK);
           }
           else{

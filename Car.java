@@ -53,22 +53,23 @@ public class Car extends Thread {
       stepFlag = false;
       
       //car moves as many steps as it is allocated
-      for(int n = 0; n < numberOfSteps; n++)
+      for(int n = 0; n < numberOfSteps && (xDestination != currentX && yDestination != currentY); n++)
       {
           //waits for signal from ParkingLot for a new step
           while(!stepFlag)
-          {System.out.println("am I stalling?");
+          {
           }
           stepFlag = false;
         //checks each space in the loop
         int[][] spacesToCheck = nextDestination();
-        for(int i = 0; i < 3; i++)
+        //checks to see if the car has moved
+        boolean moveFlag = false;
+        for(int i = 0; i < 3 && !moveFlag; i++)
         {
-           System.out.println(myLot.isLocked(spacesToCheck[i][0], spacesToCheck[i][1]));
           //checks if space is currently locked
           if(!myLot.isLocked(spacesToCheck[i][0], spacesToCheck[i][1]))
           {
-              
+            
             //locks current space being looked at, checks if it's occupied.  If yes, put car in space and delete old car reference.
             myLot.setLock(spacesToCheck[i][0], spacesToCheck[i][1], true);
             if(!myLot.isOccupied(spacesToCheck[i][0], spacesToCheck[i][1]))
@@ -77,13 +78,14 @@ public class Car extends Thread {
               myLot.setPosition(currentX, currentY, null);
               currentX = spacesToCheck[i][0];
               currentY = spacesToCheck[i][1];
+              moveFlag = true;             
             }
             myLot.setLock(spacesToCheck[i][0], spacesToCheck[i][1], false);
           }
         }
-        System.out.println(currentX +" "+ currentY);
       }
     }
+    myLot.setPosition(currentX, currentY, null);
     myLot.increment();
   }
   
@@ -149,48 +151,56 @@ public class Car extends Thread {
     int directionType = decideShortestPath();
     int north = getY()-1;
     int south = getY()+1;
-    int east = getX()+1;
-    int west = getX()-1;
+    int east = getX()-1;
+    int west = getX()+1;
     
     //north
     if(yPathLength()>0 && directionType == -1){
       //within the bounds + available space
       //default case: Go straight up
+      
       return new int[][] {{getX(), north}, {east, north}, {west, north}};
     }
     //south
     else if(yPathLength()<0 && directionType == -1){
+      
       return new int[][] {{getX(), south},{east, south}, {west, south}};           
     }
-    //east
+    //Actually west
     else if(xPathLength()>0 && directionType == 1){
       //default case go east
+      
       return new int[][]{{east,getY()},{east,south},{east,north}};
     }
-    //west
+    //Actually east
     else if(xPathLength()<0 && directionType == 1){
       //default case go west
+    
       return new int[][] {{west, getY()},{west, south}, {west, north}};
     }      
     //northeast
     else if(yPathLength()>0 && xPathLength()>0 && directionType == 0){
       //default case: northeast
+      
       return new int[][] {{east, north}, {getX(), north}, {east, getY()}};                     
     }
     //northwest
     else if(yPathLength()>0 && xPathLength()<0 && directionType == 0){
       //check northwest
+     
       return new int[][]{{west, north},{getX(), north}, {west, getY()}};
     }
     //southeast
     else if(yPathLength()<0 && xPathLength()>0 && directionType == 0){
       //default check southeast
+      
       return new int[][]{{east, south},{getX(), south}, {east, getY()}};
     }
     //southwest
     //else if(yPathLength()<0 && xPathLength()<0 && directionType == 0)
     else{
       //check southwest
+     
       return new int[][]{{west, south},{getX(), south},{west, getY()}};
     }              
   }

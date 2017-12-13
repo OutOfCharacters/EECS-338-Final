@@ -37,6 +37,10 @@ public class ParkingLot
       myLotArray[xLength - 1][i] = new Car(Color.GRAY, this);
     }
     
+    myLotArray[4][4] = new Car(Color.GRAY, this);
+    myLotArray[3][3] = new Car(Color.GRAY, this);
+    myLotArray[4][6] = new Car(Color.GRAY, this);
+    
     for(int x = 0; x < xLength; x++)
     {
       for(int y = 0; y < yLength; y++)
@@ -45,13 +49,16 @@ public class ParkingLot
       }
     }
     
-    myLotArray[10][10] = new Car(10, 10, 1, 1, 1, Color.BLUE, this);
-    
-    myCars = new Car[1];
+    myLotArray[10][10] = new Car(10, 10, 1, 1, 2, Color.BLUE, this);
+    myLotArray[11][11] = new Car(11, 11, 1, 1, 1, Color.RED, this);
+    myLotArray[3][4] = new Car(3, 3, 18, 18, 1, Color.ORANGE, this);
+
+    myCars = new Car[3];
     
     //adds in cars into the array
     myCars[0] = myLotArray[10][10];
-    
+    myCars[1] = myLotArray[11][11];
+    myCars[2] = myLotArray[3][3];
     for(Car car : myCars)
     {
         car.start();
@@ -64,8 +71,8 @@ public class ParkingLot
     int runCounter = 0;
     
     //iterates until every car has reached its destination
-    //while(countDone < myCars.length)
-    for(int poop = 0; poop<20; poop++)
+    while(countDone < myCars.length)
+    //for(int poop = 0; poop<20; poop++)
     {
       //iterates for all cars to trigger turn 
       for(int x = 0; x < myCars.length; x++)
@@ -84,11 +91,20 @@ public class ParkingLot
        TimeUnit.MILLISECONDS.sleep(50);
       }
       //saves current snapshot into the array
-      replay.add(myLotArray);
+      
+      replay.add(snapshot(myLotArray));
     }    
 
   }
-  
+  public Car[][] snapshot(Car[][] car){
+      Car[][] carArray = new Car[xLength][yLength];
+      for(int i = 0; i<carArray.length; i++){
+          for(int j = 0; j<carArray[0].length; j++){
+              carArray[i][j] = car[i][j];
+          }
+      }
+      return carArray;
+  }
   public ArrayList<Car[][]> getReplay(){
     return replay;
   }
