@@ -8,7 +8,15 @@ class Controller
 {
   public static void main(String[] args) throws InterruptedException
   {
-    ParkingLot parkingLot = new ParkingLot();
+    Car[] carz = {new Car(10, 10, 1, 1, 2, Color.BLUE, null),
+    new Car(11, 11, 1, 1, 1, Color.RED, null),
+    new Car(3, 4, 18, 18, 2, Color.ORANGE, null),
+    new Car(7, 2, 1, 18, 1, Color.ORANGE, null),
+    new Car(9, 12, 1, 18, 3, Color.ORANGE, null),
+    new Car(3, 8, 18, 1, 1, Color.ORANGE, null),
+    //new Car(10, 4, 18, 1, 1, Color.ORANGE, null)
+    };
+    ParkingLot parkingLot = new ParkingLot(carz);
     parkingLot.RunTurns();
     
     JFrame frame = new JFrame();   

@@ -85,6 +85,7 @@ public class Car extends Thread {
         }
       }
     }
+    System.out.println("deleted");
     myLot.setPosition(currentX, currentY, null);
     myLot.increment();
   }
@@ -203,6 +204,11 @@ public class Car extends Thread {
      
       return new int[][]{{west, south},{getX(), south},{west, getY()}};
     }              
+  }
+  
+  public void setLot(ParkingLot parkingLot)
+  {
+      this.myLot = parkingLot;
   }
   
 }

@@ -7,7 +7,7 @@ public class ParkingLot
   //sets a defualt value for x and y dimensions, which can be changed later
   private final int xLength = 20;
   private final int yLength = 20;
-  private final int MAX_STEPS = 5;
+  private final int MAX_STEPS = 3;
   
   private int countDone;
   
@@ -19,7 +19,7 @@ public class ParkingLot
   private ArrayList<Car[][]> replay = new ArrayList<>();
   private Car[] myCars;
   
-  public ParkingLot()
+  public ParkingLot(Car[] carList)
   {
     countDone = 0;
     myLotArray = new Car[xLength][yLength];
@@ -46,17 +46,14 @@ public class ParkingLot
         isLocked[x][y] = false;
       }
     }
-    
-    myLotArray[10][10] = new Car(10, 10, 1, 1, 2, Color.BLUE, this);
-    myLotArray[11][11] = new Car(11, 11, 1, 1, 1, Color.RED, this);
-    myLotArray[3][4] = new Car(3, 4, 18, 18, 1, Color.ORANGE, this);
+    //sets the cars 
+    for(Car cars: carList){
+        cars.setLot(this);
+        myLotArray[cars.getX()][cars.getY()] = cars;
+    }
 
-    myCars = new Car[3];
-    
-    //adds in cars into the array
-    myCars[0] = myLotArray[10][10];
-    myCars[1] = myLotArray[11][11];
-    myCars[2] = myLotArray[3][4];
+    myCars = carList;
+
     for(Car car : myCars)
     {
         car.start();
@@ -86,7 +83,7 @@ public class ParkingLot
        {
         myCars[y].triggerStepFlag();
        }
-       TimeUnit.MILLISECONDS.sleep(50);
+       TimeUnit.MILLISECONDS.sleep(10);
       }
       //saves current snapshot into the array
       
