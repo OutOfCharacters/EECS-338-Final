@@ -37,7 +37,10 @@ public class ParkingLot
       myLotArray[xLength - 1][i] = new Car(Color.GRAY, this);
     }
     
-
+    myLotArray[6][6] = new Car(Color.GRAY, this);
+    myLotArray[12][12] = new Car(Color.GRAY, this);
+    myLotArray[6][12] = new Car(Color.GRAY, this);
+    myLotArray[12][6] = new Car(Color.GRAY, this);    
     
     for(int x = 0; x < xLength; x++)
     {
@@ -93,6 +96,8 @@ public class ParkingLot
     }    
 
   }
+  
+  //saves each snapshot as a new array, which is then passed to the arraylist
   public Car[][] snapshot(Car[][] car){
       Car[][] carArray = new Car[xLength][yLength];
       for(int i = 0; i<carArray.length; i++){
@@ -102,14 +107,11 @@ public class ParkingLot
       }
       return carArray;
   }
+  
+  
   public ArrayList<Car[][]> getReplay(){
     return replay;
   }
-  
-  //adds a snapshot of the car array to the replay
-  //public void addToReplay(int turn){
-    //replay[turn] = myLotArray;
-  //}
   
   public boolean isOccupied(int x, int y)
   {

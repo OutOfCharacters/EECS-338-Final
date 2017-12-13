@@ -16,7 +16,7 @@ public class Car extends Thread {
   private boolean startFlag = false;
   private boolean stepFlag = false;
   
-  
+  //creates a car that moves
   public Car(int x, int y, int xDest, int yDest, int speed, Color colour, ParkingLot newLot)
   {
     currentY = y;
@@ -28,6 +28,7 @@ public class Car extends Thread {
     myLot = newLot;
   }
   
+  //creates a car that just occupies the border
   public Car(Color colour, ParkingLot newLot)
   {
     xDestination = 0;
@@ -207,6 +208,7 @@ public class Car extends Thread {
     }              
   }
   
+  //setter for the parkingLot
   public void setLot(ParkingLot parkingLot)
   {
       this.myLot = parkingLot;

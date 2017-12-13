@@ -10,8 +10,8 @@ class Controller
     Car[] carz = {new Car(10, 10, 1, 1, 2, Color.BLUE, null),
     new Car(11, 11, 1, 1, 1, Color.RED, null),
     new Car(3, 4, 18, 18, 2, Color.ORANGE, null),
-    new Car(7, 2, 1, 18, 1, Color.CYAN, null),
-    //new Car(9, 12, 1, 18, 3, Color.GREEN, null),
+    //new Car(7, 2, 1, 18, 1, Color.CYAN, null),
+    new Car(9, 12, 1, 18, 3, Color.GREEN, null),
     //new Car(3, 8, 18, 1, 1, Color.MAGENTA, null),
     //new Car(10, 4, 18, 1, 1, Color.YELLOW, null)
     };
@@ -69,6 +69,7 @@ class Controller
           }         
         }
       }
+      //set exits in dark gray
       grid[1][1].setBackground(Color.DARK_GRAY);
       grid[1][18].setBackground(Color.DARK_GRAY);
       grid[18][1].setBackground(Color.DARK_GRAY);
