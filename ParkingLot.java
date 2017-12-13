@@ -8,6 +8,8 @@ public class ParkingLot
   private final int xLength = 20;
   private final int yLength = 20;
   private final int MAX_STEPS = 4;
+  private final Object startNotifier;
+  private final Object stepNotifier;
   
   private int countDone;
   
@@ -19,8 +21,11 @@ public class ParkingLot
   private ArrayList<Car[][]> replay = new ArrayList<>();
   private Car[] myCars;
   
-  public ParkingLot(Car[] carList)
+  public ParkingLot(Car[] carList, Object startNotifier, Object stepNotifier)
   {
+    this.startNotifier = startNotifier;
+    this.stepNotifier = stepNotifier;
+    
     countDone = 0;
     myLotArray = new Car[xLength][yLength];
     isLocked = new boolean[xLength][yLength];
@@ -73,19 +78,27 @@ public class ParkingLot
     //for(int poop = 0; poop<20; poop++)
     {
       //iterates for all cars to trigger turn 
-      for(int x = 0; x < myCars.length; x++)
+      //for(int x = 0; x < myCars.length; x++)
+      //{
+      //  myCars[x].triggerStartFlag();
+     // }
+      synchronized(startNotifier)
       {
-        myCars[x].triggerStartFlag();
+        startNotifier.notifyAll();
       }
-      
       //iterates for all cars to trigger step flag, as many times as the max number of steps possible
       for(int x = 0; x < MAX_STEPS; x++)
       {
 
-       for(int y = 0; y < myCars.length; y++)
-       {
-        myCars[y].triggerStepFlag();
-       }
+       //for(int y = 0; y < myCars.length; y++)
+       //{
+       // myCars[y].triggerStepFlag();
+       //}
+        
+        synchronized(stepNotifier)
+        {
+         stepNotifier.notifyAll(); 
+        }
        TimeUnit.MILLISECONDS.sleep(20);
       }
       //saves current snapshot into the array

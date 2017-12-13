@@ -7,15 +7,32 @@ class Controller
 {
   public static void main(String[] args) throws InterruptedException
   {
-    Car[] carz = {new Car(10, 10, 1, 1, 2, Color.BLUE, null),
-    new Car(11, 11, 1, 1, 1, Color.RED, null),
-    new Car(3, 4, 18, 18, 2, Color.ORANGE, null),
-    //new Car(7, 2, 1, 18, 1, Color.CYAN, null),
-    new Car(9, 12, 1, 18, 3, Color.GREEN, null),
-    //new Car(3, 8, 18, 1, 1, Color.MAGENTA, null),
-    //new Car(10, 4, 18, 1, 1, Color.YELLOW, null)
+    Object startNotifier = new Object();
+    Object stepNotifier = new Object();
+    
+    Car[] carz = {new Car(10, 10, 1, 1, 2, Color.BLUE, null, startNotifier, stepNotifier),
+    new Car(11, 11, 1, 1, 1, Color.RED, null, startNotifier, stepNotifier),
+    new Car(3, 4, 18, 18, 2, Color.ORANGE, null,startNotifier, stepNotifier),
+    new Car(12,17,18,18,1, Color.PINK, null, startNotifier, stepNotifier),
+    new Car(7, 2, 1, 18, 1, Color.CYAN, null,startNotifier, stepNotifier),
+    new Car(9, 12, 1, 18, 3, Color.GREEN, null,startNotifier, stepNotifier),
+    new Car(3, 8, 18, 1, 1, Color.MAGENTA, null,startNotifier, stepNotifier),
+    new Car(10, 4, 18, 1, 1, Color.YELLOW, null,startNotifier, stepNotifier),
+    new Car(11, 10, 1, 18, 2, Color.BLUE, null, startNotifier, stepNotifier),
+    new Car(11, 10, 18, 1, 1, Color.RED, null, startNotifier, stepNotifier),
+    new Car(7, 4, 1, 1, 2, Color.ORANGE, null,startNotifier, stepNotifier),
+    new Car(3,17,18,1,1, Color.PINK, null, startNotifier, stepNotifier),
+    new Car(9, 9, 18, 18, 1, Color.CYAN, null,startNotifier, stepNotifier),
+    new Car(13, 12, 1, 1, 3, Color.GREEN, null,startNotifier, stepNotifier),
+    new Car(6, 8, 18, 1, 1, Color.MAGENTA, null,startNotifier, stepNotifier),
+    new Car(8, 6, 1, 18, 1, Color.YELLOW, null,startNotifier, stepNotifier),
+    new Car(2, 10, 18, 18, 2, Color.RED, null, startNotifier, stepNotifier),
+    new Car(10, 2, 18, 1, 1, Color.YELLOW, null, startNotifier, stepNotifier),
+    new Car(8, 13, 1, 18, 3, Color.MAGENTA, null, startNotifier, stepNotifier),
+    new Car(4, 2, 18, 18, 2, Color.CYAN, null, startNotifier, stepNotifier)
+    
     };
-    ParkingLot parkingLot = new ParkingLot(carz);
+    ParkingLot parkingLot = new ParkingLot(carz,startNotifier, stepNotifier);
     parkingLot.RunTurns();
     
     JFrame frame = new JFrame();   

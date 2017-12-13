@@ -13,11 +13,14 @@ public class Car extends Thread {
   private boolean moveY;
   private boolean moveDiag;
   
+  private Object startNotifier;
+  private Object stepNotifier;
+  
   private boolean startFlag = false;
   private boolean stepFlag = false;
   
   //creates a car that moves
-  public Car(int x, int y, int xDest, int yDest, int speed, Color colour, ParkingLot newLot)
+  public Car(int x, int y, int xDest, int yDest, int speed, Color colour, ParkingLot newLot, Object startNotifier, Object stepNotifier)
   {
     currentY = y;
     currentX = x;
@@ -26,6 +29,8 @@ public class Car extends Thread {
     numberOfSteps = speed;
     carColor = colour;
     myLot = newLot;
+    this.startNotifier = startNotifier;
+    this.stepNotifier = stepNotifier;
   }
   
   //creates a car that just occupies the border
@@ -48,20 +53,41 @@ public class Car extends Thread {
       //System.out.println("car " + carColor.toString() + " called it's run method");
       
       //waits for input from parkingLot signaling a new turn
-      while(!startFlag)
+      //while(!startFlag)
+      //{
+      //}
+      //startFlag = false;
+      //stepFlag = false;
+      synchronized(startNotifier)
       {
+        try
+        {
+        startNotifier.wait();
+        }
+        catch(InterruptedException E)
+        {
+        }
       }
-      startFlag = false;
-      stepFlag = false;
+      
       
       //car moves as many steps as it is allocated
       for(int n = 0; n < numberOfSteps && (xDestination != currentX && yDestination != currentY); n++)
       {
           //waits for signal from ParkingLot for a new step
-          while(!stepFlag)
+          //while(!stepFlag)
+          //{
+          //}
+          //stepFlag = false;
+        synchronized(stepNotifier)
+        {
+          try
+          {
+         stepNotifier.wait(); 
+          }
+          catch(InterruptedException E)
           {
           }
-          stepFlag = false;
+        }
         //checks each space in the loop
         int[][] spacesToCheck = nextDestination();
         //checks to see if the car has moved
