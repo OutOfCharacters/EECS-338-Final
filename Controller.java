@@ -22,7 +22,7 @@ class Controller
     new Car(11, 10, 18, 1, 1, Color.RED, null, startNotifier, stepNotifier),
     new Car(7, 4, 1, 1, 2, Color.ORANGE, null,startNotifier, stepNotifier),
     new Car(3,17,18,1,1, Color.PINK, null, startNotifier, stepNotifier),
-    new Car(9, 9, 18, 18, 1, Color.CYAN, null,startNotifier, stepNotifier),
+    //new Car(9, 9, 18, 18, 1, Color.CYAN, null,startNotifier, stepNotifier),
     new Car(13, 12, 1, 1, 3, Color.GREEN, null,startNotifier, stepNotifier),
     new Car(6, 8, 18, 1, 1, Color.MAGENTA, null,startNotifier, stepNotifier),
     new Car(8, 6, 1, 18, 1, Color.YELLOW, null,startNotifier, stepNotifier),
