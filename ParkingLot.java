@@ -7,7 +7,7 @@ public class ParkingLot
   //sets a defualt value for x and y dimensions, which can be changed later
   private final int xLength = 20;
   private final int yLength = 20;
-  private final int MAX_STEPS = 3;
+  private final int MAX_STEPS = 4;
   
   private int countDone;
   
@@ -66,7 +66,7 @@ public class ParkingLot
     int runCounter = 0;
     
     //iterates until every car has reached its destination
-    while(countDone < myCars.length)
+    while(countDone < myCars.length && runCounter < 50)
     //for(int poop = 0; poop<20; poop++)
     {
       //iterates for all cars to trigger turn 
@@ -83,11 +83,13 @@ public class ParkingLot
        {
         myCars[y].triggerStepFlag();
        }
-       TimeUnit.MILLISECONDS.sleep(10);
+       TimeUnit.MILLISECONDS.sleep(20);
       }
       //saves current snapshot into the array
-      
+      TimeUnit.MILLISECONDS.sleep(20);
       replay.add(snapshot(myLotArray));
+      runCounter++;
+      System.out.println(runCounter);
     }    
 
   }

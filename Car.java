@@ -44,6 +44,7 @@ public class Car extends Thread {
     //stops when car has reached it's destination, car will then be deleted when it's reference is deleted by parkingLot
     while(currentX != xDestination || currentY != yDestination)
     {
+      //System.out.println("car " + carColor.toString() + " called it's run method");
       
       //waits for input from parkingLot signaling a new turn
       while(!startFlag)
@@ -85,7 +86,7 @@ public class Car extends Thread {
         }
       }
     }
-    System.out.println("deleted");
+    System.out.println("deleted the " + carColor.toString() + " car");
     myLot.setPosition(currentX, currentY, null);
     myLot.increment();
   }
