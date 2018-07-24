@@ -50,14 +50,6 @@ public class Car extends Thread {
     //stops when car has reached it's destination, car will then be deleted when it's reference is deleted by parkingLot
     while(currentX != xDestination || currentY != yDestination)
     {
-      //System.out.println("car " + carColor.toString() + " called it's run method");
-      
-      //waits for input from parkingLot signaling a new turn
-      //while(!startFlag)
-      //{
-      //}
-      //startFlag = false;
-      //stepFlag = false;
       synchronized(startNotifier)
       {
         try
@@ -73,11 +65,6 @@ public class Car extends Thread {
       //car moves as many steps as it is allocated
       for(int n = 0; n < numberOfSteps && (xDestination != currentX && yDestination != currentY); n++)
       {
-          //waits for signal from ParkingLot for a new step
-          //while(!stepFlag)
-          //{
-          //}
-          //stepFlag = false;
         synchronized(stepNotifier)
         {
           try
@@ -184,52 +171,52 @@ public class Car extends Thread {
     int west = getX()+1;
     
     //north
-    if(yPathLength()>0 && directionType == -1){
+    if(yPathLength() > 0 && directionType == -1)
+    {
       //within the bounds + available space
-      //default case: Go straight up
-      
+      //default case: Go straight up      
       return new int[][] {{getX(), north}, {east, north}, {west, north}};
     }
+    
     //south
-    else if(yPathLength()<0 && directionType == -1){
-      
+    else if(yPathLength() < 0 && directionType == -1)
+    { 
       return new int[][] {{getX(), south},{east, south}, {west, south}};           
     }
-    //Actually west
-    else if(xPathLength()>0 && directionType == 1){
-      //default case go east
-      
+            
+    //west
+    else if(xPathLength() > 0 && directionType == 1)
+    {     
       return new int[][]{{east,getY()},{east,south},{east,north}};
     }
-    //Actually east
-    else if(xPathLength()<0 && directionType == 1){
-      //default case go west
-    
+            
+    //east
+    else if(xPathLength() < 0 && directionType == 1)
+    {
       return new int[][] {{west, getY()},{west, south}, {west, north}};
-    }      
+    }     
+            
     //northeast
-    else if(yPathLength()>0 && xPathLength()>0 && directionType == 0){
-      //default case: northeast
-      
+    else if(yPathLength() > 0 && xPathLength() > 0 && directionType == 0)
+    {
       return new int[][] {{east, north}, {getX(), north}, {east, getY()}};                     
     }
+            
     //northwest
-    else if(yPathLength()>0 && xPathLength()<0 && directionType == 0){
-      //check northwest
-     
+    else if(yPathLength() > 0 && xPathLength() < 0 && directionType == 0)
+    {  
       return new int[][]{{west, north},{getX(), north}, {west, getY()}};
     }
+            
     //southeast
-    else if(yPathLength()<0 && xPathLength()>0 && directionType == 0){
-      //default check southeast
-      
+    else if(yPathLength() < 0 && xPathLength() > 0 && directionType == 0)
+    {   
       return new int[][]{{east, south},{getX(), south}, {east, getY()}};
     }
+            
     //southwest
-    //else if(yPathLength()<0 && xPathLength()<0 && directionType == 0)
-    else{
-      //check southwest
-     
+    else
+    {   
       return new int[][]{{west, south},{getX(), south},{west, getY()}};
     }              
   }
