@@ -10,7 +10,8 @@ class Controller
     Object startNotifier = new Object();
     Object stepNotifier = new Object();
     
-    Car[] carz = {new Car(10, 10, 1, 1, 2, Color.BLUE, null, startNotifier, stepNotifier),
+    //create all the cars
+    Car[] cars = {new Car(10, 10, 1, 1, 2, Color.BLUE, null, startNotifier, stepNotifier),
     new Car(11, 11, 1, 1, 1, Color.RED, null, startNotifier, stepNotifier),
     new Car(3, 4, 18, 18, 2, Color.ORANGE, null,startNotifier, stepNotifier),
     new Car(12,17,18,18,1, Color.PINK, null, startNotifier, stepNotifier),
@@ -22,7 +23,6 @@ class Controller
     new Car(11, 10, 18, 1, 1, Color.RED, null, startNotifier, stepNotifier),
     new Car(7, 4, 1, 1, 2, Color.ORANGE, null,startNotifier, stepNotifier),
     new Car(3,17,18,1,1, Color.PINK, null, startNotifier, stepNotifier),
-    //new Car(9, 9, 18, 18, 1, Color.CYAN, null,startNotifier, stepNotifier),
     new Car(13, 12, 1, 1, 3, Color.GREEN, null,startNotifier, stepNotifier),
     new Car(6, 8, 18, 1, 1, Color.MAGENTA, null,startNotifier, stepNotifier),
     new Car(8, 6, 1, 18, 1, Color.YELLOW, null,startNotifier, stepNotifier),
@@ -32,7 +32,7 @@ class Controller
     new Car(4, 2, 18, 18, 2, Color.CYAN, null, startNotifier, stepNotifier)
     
     };
-    ParkingLot parkingLot = new ParkingLot(carz,startNotifier, stepNotifier);
+    ParkingLot parkingLot = new ParkingLot(cars, startNotifier, stepNotifier);
     parkingLot.RunTurns();
     
     JFrame frame = new JFrame();   
@@ -63,7 +63,7 @@ class Controller
         panel.add(grid[i][j]);
       }
     }
-    //grid[0][0].setBackground(Color.red);
+
     frame.setVisible(true);
     
     getReplay(parkingLot, grid);
