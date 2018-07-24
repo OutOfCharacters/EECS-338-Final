@@ -1,3 +1,10 @@
+7/24/2018 - cleaned up code for formatting and comments, in order to make
+it more readable and less unfinished.
+
+12/12/2017 -  worked on all classes, and worked to implement an actionlistener
+system in order to synchronize more effectively/efficiently between all parts.
+Did unit testing, and submitted the project for grading.
+
 12/3/2017 - worked on Car class.  The nextDestination() method should be
 retooled to return three spaces to look at, which will then be evaluated
 for whether or not they are locked, and then empty.  
