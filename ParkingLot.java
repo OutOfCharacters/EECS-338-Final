@@ -75,13 +75,7 @@ public class ParkingLot
     
     //iterates until every car has reached its destination
     while(countDone < myCars.length && runCounter < 50)
-    //for(int poop = 0; poop<20; poop++)
     {
-      //iterates for all cars to trigger turn 
-      //for(int x = 0; x < myCars.length; x++)
-      //{
-      //  myCars[x].triggerStartFlag();
-     // }
       synchronized(startNotifier)
       {
         startNotifier.notifyAll();
@@ -90,11 +84,6 @@ public class ParkingLot
       for(int x = 0; x < MAX_STEPS; x++)
       {
 
-       //for(int y = 0; y < myCars.length; y++)
-       //{
-       // myCars[y].triggerStepFlag();
-       //}
-        
         synchronized(stepNotifier)
         {
          stepNotifier.notifyAll(); 
@@ -113,8 +102,10 @@ public class ParkingLot
   //saves each snapshot as a new array, which is then passed to the arraylist
   public Car[][] snapshot(Car[][] car){
       Car[][] carArray = new Car[xLength][yLength];
-      for(int i = 0; i<carArray.length; i++){
-          for(int j = 0; j<carArray[0].length; j++){
+      for(int i = 0; i<carArray.length; i++)
+      {
+          for(int j = 0; j<carArray[0].length; j++)
+          {
               carArray[i][j] = car[i][j];
           }
       }
@@ -122,7 +113,8 @@ public class ParkingLot
   }
   
   
-  public ArrayList<Car[][]> getReplay(){
+  public ArrayList<Car[][]> getReplay()
+  {
     return replay;
   }
   
